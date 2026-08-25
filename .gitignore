@@ -1,0 +1,42 @@
+# Compile artifacts
+*.o
+*.obj
+*.exe
+*.out
+*.app
+*.a
+*.la
+*.lo
+*.so
+*.dylib
+
+# CMake build directories
+build/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile.cmake
+
+# Visual Studio files
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.suo
+*.db
+*.opendb
+
+# VS Code
+.vscode/
+
+# Local metadata
+desktop.ini
+
+# IDE Temp folders
+.gemini/
+.agents/
+scratch/
+task.md
+implementation_plan.md
+walkthrough.md
