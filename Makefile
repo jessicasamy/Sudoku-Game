@@ -5,6 +5,7 @@ TARGET = SudokuProject.exe
 SRCS = src/SudokuBoard.cpp \
        src/SudokuSolver.cpp \
        src/SudokuGame.cpp \
+       src/SudokuGenerator.cpp \
        src/main.cpp
 
 OBJS = $(SRCS:.cpp=.o)

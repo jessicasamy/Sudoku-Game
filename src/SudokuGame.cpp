@@ -8,16 +8,6 @@ SudokuGame::SudokuGame() : isRunning(true) {
 
 void SudokuGame::loadDefaultPuzzle() {
     // Standard sample puzzle from specification (Page 4)
-    // 5 3 . | . 7 . | . . .
-    // 6 . . | 1 9 5 | . . .
-    // . 9 8 | . . . | . 6 .
-    // 8 . . | . 6 . | . . 3
-    // 4 . . | 8 . 3 | . . 1
-    // 7 . . | . 2 . | . . 6
-    // . 6 . | . . . | 2 8 .
-    // . . . | 4 1 9 | . . 5
-    // . . . | . 8 . | . 7 9
-
     board.setCell(0, 0, 5); board.setCell(0, 1, 3); board.setCell(0, 4, 7);
     board.setCell(1, 0, 6); board.setCell(1, 3, 1); board.setCell(1, 4, 9); board.setCell(1, 5, 5);
     board.setCell(2, 1, 9); board.setCell(2, 2, 8); board.setCell(2, 7, 6);
@@ -34,7 +24,8 @@ void SudokuGame::displayMenu() const {
               << "2) Solve automatically\n"
               << "3) Load puzzle from file\n"
               << "4) Save current puzzle to file\n"
-              << "5) Exit\n";
+              << "5) Exit\n"
+              << "6) [Optional] Generate new puzzle\n";
 }
 
 void SudokuGame::handleEnterMove() {
@@ -60,7 +51,6 @@ void SudokuGame::handleEnterMove() {
         return;
     }
 
-    // Convert 1-based indexing to 0-based
     int boardRow = r - 1;
     int boardCol = c - 1;
 
@@ -105,6 +95,29 @@ void SudokuGame::handleSaveToFile() {
     }
 }
 
+void SudokuGame::handleGeneratePuzzle() {
+    std::cout << "Select difficulty:\n"
+              << "1) Easy\n"
+              << "2) Medium\n"
+              << "3) Hard\n"
+              << "Choice: ";
+    int diffChoice;
+    if (!(std::cin >> diffChoice)) {
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cout << "Invalid input!\n\n";
+        return;
+    }
+
+    Difficulty diff = Difficulty::Medium;
+    if (diffChoice == 1) diff = Difficulty::Easy;
+    else if (diffChoice == 3) diff = Difficulty::Hard;
+
+    std::cout << "Generating new puzzle... Please wait.\n";
+    board = generator.generate(diff);
+    std::cout << "New puzzle generated successfully!\n\n";
+}
+
 void SudokuGame::run() {
     while (isRunning) {
         board.print();
@@ -115,7 +128,7 @@ void SudokuGame::run() {
         if (!(std::cin >> choice)) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Invalid choice! Please enter a number between 1 and 5.\n\n";
+            std::cout << "Invalid choice! Please enter a number between 1 and 6.\n\n";
             continue;
         }
 
@@ -136,8 +149,11 @@ void SudokuGame::run() {
                 isRunning = false;
                 std::cout << "Exiting Sudoku Game. Goodbye!\n";
                 break;
+            case 6:
+                handleGeneratePuzzle();
+                break;
             default:
-                std::cout << "Invalid option! Choice must be between 1 and 5.\n\n";
+                std::cout << "Invalid option! Choice must be between 1 and 6.\n\n";
                 break;
         }
     }

@@ -2,12 +2,14 @@
 
 #include "SudokuBoard.hpp"
 #include "SudokuSolver.hpp"
+#include "SudokuGenerator.hpp"
 #include <string>
 
 class SudokuGame {
 private:
     SudokuBoard board;
     SudokuSolver solver;
+    SudokuGenerator generator;
     bool isRunning;
 
     // Helper functions for menu options
@@ -16,6 +18,7 @@ private:
     void handleSolveAutomatically();
     void handleLoadFromFile();
     void handleSaveToFile();
+    void handleGeneratePuzzle();
     void loadDefaultPuzzle();
 
 public:
